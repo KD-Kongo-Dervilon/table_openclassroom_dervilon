@@ -1,4 +1,4 @@
-import  React , { useState} from 'react';
+import React, {useEffect, useState} from "react"
 import Rows from './Rows';
 import PropTypes from 'prop-types';
 import "./style.css";
@@ -18,55 +18,69 @@ function Table({ data, labels, pagination }) {
     useState(pagination)
     const [amounOfEntriesPerPage, setAmounOfEntriesPerPage] = useState(0)
     const [tableData, setTableData] = useState(data)
-    const [sortBy, setSortBy] = useState(0)
+    const [sortBy, setSortBy] = useState(null)
     const [sortByAsc, setSortByAsc] = useState(true)
 
+    const [page, setPage] = useState([])
 
-function setPagination(
-    /** @type {any[]} */ array,
-    /** @type {number} */ pageSize,
-    /** @type {number} */ pageNumber
-) {
-    const newArray = array
-        .slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
-        .sort(function (a, b) {
-            if (sortByAsc) {
-                return Object.values(a)[sortBy].localeCompare(
-                    Object.values(b)[sortBy]
-                )
-            } else {
-                return Object.values(b)[sortBy].localeCompare(
-                    Object.values(a)[sortBy]
-                )
-            }
-        })
-    return newArray
-}
-
-function handleChangeSelect(event) {
-    const value = event.target.value
-    setSelectAmounOfEntriesPerPage(Number(value))
-        setAmounOfEntriesPerPage(
-            setPagination(data, selectAmounOfEntriesPerPage, pageNumber).length
-        )
-        setPageNumber(1)
+    function handleChangeSelect(event) {
+        const value = event.target.value
+            setSelectAmounOfEntriesPerPage(Number(value))
+            setPageNumber(1)
     }
 
-function handleChangeSearch(event) {
-    const value = event.target.value
-    const result = data.filter((obj) => {
-        const isRequest = Object.values(obj).filter((item) =>
-        String(item.toLowerCase()).includes(String(value.toLowerCase()))
-        )
-        return isRequest.length > 0
-    })
-    value.length === 0 ? setTableData(data) : setTableData(result)
-}
+    function handleChangeSearch(event) {
+        const value = event.target.value
+        const result = data.filter((obj) => {
+            const isRequest = Object.values(obj).filter((item) =>
+            String(item.toLowerCase()).includes(String(value.toLowerCase()))
+            )
+            return isRequest.length > 0
+        })
+        value.length === 0 ? setTableData(data) : setTableData(result)
+    }
 
-function handleClickArrow(index) {
-    setSortBy(index)
-    sortByAsc ? setSortByAsc(false) : setSortByAsc(true)
-}
+    function handleClickArrow(index) {
+        setSortBy(index)
+        sortByAsc ? setSortByAsc(false) : setSortByAsc(true)
+    }
+
+    useEffect(() => {
+        function getPagination(
+            /** @type {any[]} */ array,
+            /** @type {number} */ pageSize,
+            /** @type {number} */ pageNumber
+        ) {
+            const newArray = array.slice(
+                (pageNumber - 1) * pageSize,
+                pageNumber * pageSize
+            )
+            if (sortBy === null) {
+                return newArray
+            } else {
+                return newArray.sort(function (a, b) {
+                    if (sortByAsc) {
+                    return Object.values(a)[sortBy].localeCompare(
+                        Object.values(b)[sortBy]
+                    )
+                } else {
+                    return Object.values(b)[sortBy].localeCompare(
+                        Object.values(a)[sortBy]
+                    )
+                }
+            })}
+        }
+            setPage(getPagination(tableData, selectAmounOfEntriesPerPage, pageNumber))
+            setAmounOfEntriesPerPage(page.length)
+            return
+        }, [
+            page.length,
+            pageNumber,
+            selectAmounOfEntriesPerPage,
+            sortBy,
+            sortByAsc,
+            tableData,
+        ])
 
 return (
     <div id="table">
@@ -108,13 +122,7 @@ return (
                 </tr>
             </thead>
             <tbody>
-            <Rows
-                data={setPagination(
-                    tableData,
-                    selectAmounOfEntriesPerPage,
-                    pageNumber
-                )}
-                />
+                <Rows data={page} />
             </tbody>
         </table>
         <div className="table-bottom">
@@ -132,8 +140,7 @@ return (
                 <span>{pageNumber}</span>
                 <button
                     onClick={() => {
-                        setPagination(data, selectAmounOfEntriesPerPage, pageNumber)
-                        .length === selectAmounOfEntriesPerPage &&
+                        page.length === selectAmounOfEntriesPerPage &&
                         setPageNumber(pageNumber + 1)
                     }}
                 >
