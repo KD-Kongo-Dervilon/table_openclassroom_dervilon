@@ -1,5 +1,4 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import { Table } from './lib/index';
 
 const data = [{
@@ -47,8 +46,10 @@ const labels = ['First Name',
     'Zip Code',
 ]
 
-ReactDOM.render(
+const container = document.getElementById('root')
+const root = createRoot(container)
+root.render(
     <div>
         <h1>table_openclassroom_dervilon</h1>
         <Table data={data} labels={labels} pagination={10} />
-    </div>, document.getElementById("root")); 
+      </div>); 

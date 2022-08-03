@@ -5,8 +5,8 @@ import "./style.css";
 /**
  *
  * @param {Object} props
- * @param {Array} props.data
- * @param {Array} props.labels
+ *  @param {Array} props.data // Array of objects
+ * @param {Array} props.labels // Array of strings
  * @param {Number} props.pagination
  * @returns {React.ReactElement}
  */
@@ -78,4 +78,39 @@ Table.propType = {
 
 Table.defaultProps = {
     pagination: 10,
-}
+    data: [
+        {
+            firstName: 'John',
+            lastName: 'Doe',
+            startDate: '01/01/2022',
+            department: 'Aude',
+            dateOfBirth: '01/01/1980',
+            street: '1 rue Larue',
+            city: 'Nice',
+            state: 'France',
+            zipCode: '06000',
+        },
+        {
+            firstName: 'Jane',
+            lastName: 'Doe',
+            startDate: '01/01/2022',
+            department: 'Loire',
+            dateOfBirth: '01/01/1981',
+            street: '1 rue Marue',
+            city: 'Paris',
+            state: 'France',
+            zipCode: '75000',
+        },
+    ],
+        labels: [
+            'First Name',
+            'Last Name',
+            'Start Date',
+            'Department',
+            'Date of Birth',
+            'Street',
+            'City',
+            'State',
+            'Zip Code',
+        ],
+    }
