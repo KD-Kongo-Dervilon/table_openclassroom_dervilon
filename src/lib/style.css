@@ -1,40 +1,90 @@
-table {
-    border-spacing: unset;
+#table {
+    font-family: Arial,
+        Helvetica,
+        sans-serif;
+}
+
+#table>* {
+    margin: 10px 0;
+}
+
+#table .table-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#table .selectAmountEntries select {
+    border: 2px solid #f2f2f2;
+    background: #f2f2f2;
+    padding: 3px 13px;
+    border-radius: 5px;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#table .table-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#table table {
     border-collapse: collapse;
     border-spacing: 0;
     width: 100%;
-    border: 1px solid #ddd;
-    font-family: Arial, Helvetica, sans-serif
+    border: none;
+    background: #FFF;
 }
 
-th,
-td {
+#table .arrow {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon x='100' y='0' width='100' height='100' points='0,0  100,0  50,100' fill='%23FFF'/%3E%3C/svg%3E");
+    padding: 10px;
+    background-position: center;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+#table th,
+#table td {
     text-align: left;
-    padding: 8px;
+    padding: 5px 15px;
+    word-break: break-word;
 }
 
-tr:nth-child(even) {
+#table tr:nth-child(even) {
     background-color: #f2f2f2
 }
 
-td {
-    padding: 5px 15px;
-    word-break: break-word;
-    white-space: nowrap;
-}
-
-thead,
-tfoot {
-    background-color: #333;
+#table thead,
+#table tfoot {
     color: #fff;
+    background: #007fff;
 }
 
-.pagination {
+#table .pagination {
     display: flex;
     justify-content: center;
+    align-items: center;
+
 }
 
-button {
+#table .pagination span {
+    background: #f2f2f2;
+    width: 2rem;
+    border-radius: 50%;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: auto;
+}
+
+#table button {
     padding: 10px 40px;
     margin: 15px;
     width: 12em;
@@ -42,7 +92,22 @@ button {
     border: solid 1px #d9d9d9;
     border-radius: 5px;
     color: #404040;
+    cursor: pointer;
 }
+
+#table label input {
+    border: 1px solid #e1d5d5;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    width: 250px;
+    margin: auto;
+    padding: 10px 10px;
+    box-sizing: border-box;
+}
+
+
+
+
 
 @media screen and (max-width: 768px) {
 
@@ -88,4 +153,4 @@ button {
     td:last-child {
         border-bottom: 0;
     }
-} 
+}
