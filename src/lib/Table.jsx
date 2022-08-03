@@ -19,6 +19,7 @@ function Table({ data, labels, pagination }) {
     const [amounOfEntriesPerPage, setAmounOfEntriesPerPage] = useState(0)
     const [tableData, setTableData] = useState(data)
     const [sortBy, setSortBy] = useState(0)
+    const [sortByAsc, setSortByAsc] = useState(true)
 
 
 function setPagination(
@@ -29,7 +30,15 @@ function setPagination(
     const newArray = array
         .slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
         .sort(function (a, b) {
-            return Object.values(a)[sortBy].localeCompare(Object.values(b)[sortBy])
+            if (sortByAsc) {
+                return Object.values(a)[sortBy].localeCompare(
+                    Object.values(b)[sortBy]
+                )
+            } else {
+                return Object.values(b)[sortBy].localeCompare(
+                    Object.values(a)[sortBy]
+                )
+            }
         })
     return newArray
 }
@@ -52,6 +61,11 @@ function handleChangeSearch(event) {
         return isRequest.length > 0
     })
     value.length === 0 ? setTableData(data) : setTableData(result)
+}
+
+function handleClickArrow(index) {
+    setSortBy(index)
+    sortByAsc ? setSortByAsc(false) : setSortByAsc(true)
 }
 
 return (
@@ -84,7 +98,11 @@ return (
                     {labels.map((item, index) => (
                     <th key={index} scope="col" colSpan={1}>
                         {item}
-                        <span className="arrow" onClick={() => setSortBy(index)}></span>
+                        <span
+                            className="arrow"
+                            onClick={() => handleClickArrow(index)}
+                            >
+                        </span>
                     </th>
                 ))}
                 </tr>
