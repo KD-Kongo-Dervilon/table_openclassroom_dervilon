@@ -1,6 +1,6 @@
 {
   "name": "table_openclassroom_dervilon",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A simple table for your React app",
   "private": false,
   "main": "dist/index.js",
