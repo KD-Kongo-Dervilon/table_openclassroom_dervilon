@@ -14,7 +14,7 @@ Add table_openclassroom_dervilon to your project by executing
 `npm i table_openclassroom_dervilon`
 `yarn table_openclassroom_dervilon`
 
-
+```js
 import React from 'react'
 import { Table } from 'table_openclassroom_dervilon'
 import PropTypes from 'prop-types'
@@ -22,10 +22,11 @@ import PropTypes from 'prop-types'
 function App() {
   return (
     <div>
-      <Table data={dataList} labels={labels} numberOfItemsByPage={10} />
+      <Table data={data} labels={labels} pagination={10} />
     </div>
   )
 }
+```
 
 ## Author
 <table>
